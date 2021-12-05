@@ -1,7 +1,7 @@
-package com.moinul.TODO.repository;
+package com.moinul.ToDoApplication.repository;
 
-import com.moinul.TODO.common.Enum.*;
-import com.moinul.TODO.model.ToDo;
+import com.moinul.ToDoApplication.common.Enum.*;
+import com.moinul.ToDoApplication.model.ToDo;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

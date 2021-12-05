@@ -1,4 +1,4 @@
-package com.moinul.TODO;
+package com.moinul.ToDoApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

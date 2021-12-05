@@ -1,6 +1,6 @@
-package com.moinul.TODO.model;
+package com.moinul.ToDoApplication.model;
 
-import com.moinul.TODO.common.Enum.*;
+import com.moinul.ToDoApplication.common.Enum.*;
 import lombok.*;
 
 

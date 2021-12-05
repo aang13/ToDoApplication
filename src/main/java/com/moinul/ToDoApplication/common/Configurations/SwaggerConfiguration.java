@@ -1,4 +1,4 @@
-package com.moinul.TODO.common.Configurations;
+package com.moinul.ToDoApplication.common.Configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

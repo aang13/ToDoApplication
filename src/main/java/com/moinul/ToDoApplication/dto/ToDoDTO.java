@@ -1,7 +1,7 @@
-package com.moinul.TODO.dto;
+package com.moinul.ToDoApplication.dto;
 
-import com.moinul.TODO.common.Enum.*;
-import com.moinul.TODO.model.ToDo;
+import com.moinul.ToDoApplication.common.Enum.*;
+import com.moinul.ToDoApplication.model.ToDo;
 import lombok.*;
 
 @NoArgsConstructor

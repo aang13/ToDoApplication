@@ -1,9 +1,8 @@
-package com.moinul.TODO.resource;
+package com.moinul.ToDoApplication.resource;
 
-import com.moinul.TODO.common.Enum.ToDoStatus;
-import com.moinul.TODO.dto.ToDoDTO;
-import com.moinul.TODO.model.ToDo;
-import com.moinul.TODO.service.ToDoService;
+import com.moinul.ToDoApplication.common.Enum.ToDoStatus;
+import com.moinul.ToDoApplication.dto.ToDoDTO;
+import com.moinul.ToDoApplication.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +47,7 @@ public class ToDoResource {
         }
     }
     
-    @DeleteMapping(value = "todo/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "todo/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void DeleteToDo(@RequestParam("id") Long id){
         toDoService.deleteToDo(id);
     }

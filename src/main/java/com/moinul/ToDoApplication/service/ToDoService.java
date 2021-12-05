@@ -1,9 +1,9 @@
-package com.moinul.TODO.service;
+package com.moinul.ToDoApplication.service;
 
-import com.moinul.TODO.common.Enum.ToDoStatus;
-import com.moinul.TODO.dto.ToDoDTO;
-import com.moinul.TODO.model.ToDo;
-import com.moinul.TODO.repository.ToDoRepository;
+import com.moinul.ToDoApplication.common.Enum.ToDoStatus;
+import com.moinul.ToDoApplication.dto.ToDoDTO;
+import com.moinul.ToDoApplication.model.ToDo;
+import com.moinul.ToDoApplication.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
@@ -25,9 +25,14 @@ public class ToDoService {
     public ToDo createToDo(ToDoDTO toDoDTO) {
         ToDo toDo =new ToDo();
         setToDoValue(toDoDTO,toDo);
-        LocalDateTime createdDate = LocalDateTime.now();
-        toDo.setCreatedDate(createdDate);
+        
+        toDo.setCreatedDate(getLocalTime());
         return toDoRepository.save(toDo); //todo check validation before saving
+    }
+    
+    protected LocalDateTime getLocalTime() {
+        LocalDateTime createdDate = LocalDateTime.now();
+        return createdDate;
     }
     
     public ToDoDTO updateToDo(ToDoDTO updtaedToDo) {

@@ -1,4 +1,4 @@
-package com.moinul.TODO;
+package com.moinul.ToDoApplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

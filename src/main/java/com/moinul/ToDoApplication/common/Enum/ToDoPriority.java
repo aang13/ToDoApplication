@@ -1,4 +1,4 @@
-package com.moinul.TODO.common.Enum;
+package com.moinul.ToDoApplication.common.Enum;
 
 public enum ToDoPriority {
     NONE, LOW, MEDIUM, HIGH
