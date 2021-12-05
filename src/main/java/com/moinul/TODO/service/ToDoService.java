@@ -35,7 +35,7 @@ public class ToDoService {
     }
     
     public ToDo getToDo(Long id) {
-        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException());
+        ToDo toDo = toDoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if(toDo == null){
             throw new EntityNotFoundException();
         }
@@ -50,7 +50,7 @@ public class ToDoService {
     }
     
     public void deleteToDo(Long id) {
-        ToDo toDo = toDoRepository.findById(id).orElseThrow(()-> new EntityNotFoundException());
+        ToDo toDo = toDoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if(toDo != null){
             toDoRepository.delete(toDo);
         }
