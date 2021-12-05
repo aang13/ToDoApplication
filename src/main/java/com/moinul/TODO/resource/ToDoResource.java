@@ -1,5 +1,6 @@
 package com.moinul.TODO.resource;
 
+import com.moinul.TODO.dto.ToDoDTO;
 import com.moinul.TODO.model.ToDo;
 import com.moinul.TODO.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +21,22 @@ public class ToDoResource {
     }
     
     @PostMapping(value = "todo/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDo createNewToDo(@Validated @RequestBody ToDo toDo){
-        return toDoService.createToDo(toDo);
+    public ToDoDTO createNewToDo(@Validated @RequestBody ToDoDTO toDo){
+        return new ToDoDTO(toDoService.createToDo(toDo));
     }
     
     @PutMapping(value = "todo/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDo updateToDo(@Validated @RequestBody ToDo toDo){
+    public ToDoDTO updateToDo(@Validated @RequestBody ToDoDTO toDo){
         return toDoService.updateToDo(toDo);
     }
     
     @GetMapping(value = "todo/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDo getToDo(@PathVariable Long id){
-        return toDoService.getToDo(id);
+    public ToDoDTO getToDo(@PathVariable Long id){
+        return new ToDoDTO(toDoService.getToDo(id));
     }
     
     @GetMapping(value = "todo/getAll/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ToDo> getToDoList(){
+    public List<ToDoDTO> getToDoList(){
         return toDoService.getToDoList();
     }
     

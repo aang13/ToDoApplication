@@ -1,12 +1,15 @@
 package com.moinul.TODO.service;
 
+import com.moinul.TODO.dto.ToDoDTO;
 import com.moinul.TODO.model.ToDo;
 import com.moinul.TODO.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ToDoService {
@@ -18,14 +21,20 @@ public class ToDoService {
         this.toDoRepository = toDoRepository;
     }
     
-    public ToDo createToDo(ToDo toDo) {
+    public ToDo createToDo(ToDoDTO toDoDTO) {
+        ToDo toDo =new ToDo();
+        setToDoValue(toDoDTO,toDo);
+        LocalDate createdDate = LocalDate.now();
+        toDo.setCreatedDate(createdDate);
         return toDoRepository.save(toDo); //todo check validation before saving
     }
     
-    public ToDo updateToDo(ToDo updtaedToDo) {
-        ToDo toDo = toDoRepository.getById(updtaedToDo.getId());
+    public ToDoDTO updateToDo(ToDoDTO updtaedToDo) {
+        ToDo toDo = toDoRepository.findById(updtaedToDo.getId()).orElseThrow(EntityNotFoundException::new);
         if(toDo != null){
-            toDoRepository.save(updtaedToDo);
+            setToDoValue(updtaedToDo,toDo);
+            System.out.println(toDo);
+            toDoRepository.save(toDo);
         }
         else{
             throw new EntityNotFoundException();
@@ -42,11 +51,11 @@ public class ToDoService {
         return toDo;
     }
     
-    public List<ToDo> getToDoList() {
-        List<ToDo> toDoList = new ArrayList<>();
+    public List<ToDoDTO> getToDoList() {
+        List<ToDo> toDoList;
         toDoList= toDoRepository.findAll();
         if(toDoList == null) return  Collections.emptyList();
-        return toDoList;
+        return toDoList.stream().map(ToDoDTO::new).collect(Collectors.toList());
     }
     
     public void deleteToDo(Long id) {
@@ -54,5 +63,12 @@ public class ToDoService {
         if(toDo != null){
             toDoRepository.delete(toDo);
         }
+    }
+    
+    public void setToDoValue(ToDoDTO toDoDTO, ToDo toDo){
+        toDo.setTitle(toDoDTO.getTitle());
+        toDo.setDescription(toDoDTO.getDescription());
+        toDo.setStatus(toDoDTO.getStatus());
+        toDo.setPriority(toDoDTO.getPriority());
     }
 }
