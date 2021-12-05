@@ -1,5 +1,6 @@
 package com.moinul.TODO.resource;
 
+import com.moinul.TODO.common.Enum.ToDoStatus;
 import com.moinul.TODO.dto.ToDoDTO;
 import com.moinul.TODO.model.ToDo;
 import com.moinul.TODO.service.ToDoService;
@@ -8,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -35,15 +36,21 @@ public class ToDoResource {
         return new ToDoDTO(toDoService.getToDo(id));
     }
     
-    @GetMapping(value = "todo/getAll/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ToDoDTO> getToDoList(){
-        return toDoService.getToDoList();
+    @GetMapping(value = "todo/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ToDoDTO> getToDoList(@RequestParam Optional<String>status){
+        
+        if(status.isPresent()) {
+            ToDoStatus toDoStatus = ToDoStatus.valueOf(status.orElse(""));
+            return toDoService.getListByStatus(toDoStatus);
+        }
+        else{
+            return toDoService.getToDoList();
+        }
     }
     
     @DeleteMapping(value = "todo/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void DeletToDo(@RequestParam("id") Long id){
+    public void DeleteToDo(@RequestParam("id") Long id){
         toDoService.deleteToDo(id);
     }
-    
     
 }

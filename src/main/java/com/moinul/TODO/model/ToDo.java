@@ -5,7 +5,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.*;
 
 @Entity
 @Table(name="todo")
@@ -31,7 +31,7 @@ public class ToDo {
     private ToDoPriority priority;
     
     @Column(name ="created_date")
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     
     
 }

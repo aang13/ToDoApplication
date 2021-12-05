@@ -1,5 +1,6 @@
 package com.moinul.TODO.service;
 
+import com.moinul.TODO.common.Enum.ToDoStatus;
 import com.moinul.TODO.dto.ToDoDTO;
 import com.moinul.TODO.model.ToDo;
 import com.moinul.TODO.repository.ToDoRepository;
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class ToDoService {
     public ToDo createToDo(ToDoDTO toDoDTO) {
         ToDo toDo =new ToDo();
         setToDoValue(toDoDTO,toDo);
-        LocalDate createdDate = LocalDate.now();
+        LocalDateTime createdDate = LocalDateTime.now();
         toDo.setCreatedDate(createdDate);
         return toDoRepository.save(toDo); //todo check validation before saving
     }
@@ -33,7 +34,6 @@ public class ToDoService {
         ToDo toDo = toDoRepository.findById(updtaedToDo.getId()).orElseThrow(EntityNotFoundException::new);
         if(toDo != null){
             setToDoValue(updtaedToDo,toDo);
-            System.out.println(toDo);
             toDoRepository.save(toDo);
         }
         else{
@@ -52,8 +52,13 @@ public class ToDoService {
     }
     
     public List<ToDoDTO> getToDoList() {
-        List<ToDo> toDoList;
-        toDoList= toDoRepository.findAll();
+        List<ToDo> toDoList= toDoRepository.findAllByPriority();
+        if(toDoList == null) return  Collections.emptyList();
+        return toDoList.stream().map(ToDoDTO::new).collect(Collectors.toList());
+    }
+    
+    public List<ToDoDTO> getListByStatus(ToDoStatus status) {
+        List<ToDo> toDoList = toDoRepository.findAllByStatus(status);
         if(toDoList == null) return  Collections.emptyList();
         return toDoList.stream().map(ToDoDTO::new).collect(Collectors.toList());
     }
