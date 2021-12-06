@@ -2,7 +2,9 @@ package com.moinul.ToDoApplication.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moinul.ToDoApplication.common.Enum.*;
+import com.moinul.ToDoApplication.common.utils.Time;
 import com.moinul.ToDoApplication.dto.ToDoDTO;
+import com.moinul.ToDoApplication.extension.MockTimeExtension;
 import com.moinul.ToDoApplication.model.ToDo;
 import com.moinul.ToDoApplication.repository.ToDoRepository;
 import org.assertj.core.api.Assertions;
@@ -10,16 +12,14 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import java.time.*;
+import java.util.*;
+
 
 @ExtendWith(MockitoExtension.class)
+@ExtendWith(MockTimeExtension.class)
 class ToDoServiceTest {
     
     @Mock
@@ -42,7 +42,7 @@ class ToDoServiceTest {
         toDoDTO.setPriority(ToDoPriority.HIGH);
         toDoDTO.setStatus(ToDoStatus.TODO);
         toDoService.setToDoValue(toDoDTO,toDo);
-        toDo.setCreatedDate(LocalDateTime.now());
+        toDo.setCreatedDate(Time.currentDateTime());
         Mockito.when(toDoRepository.save(toDo)).thenReturn(RECORD_1);
         
         toDo = toDoService.createToDo(toDoDTO);
@@ -59,6 +59,10 @@ class ToDoServiceTest {
         toDoDTO.setPriority(ToDoPriority.HIGH);
         toDoDTO.setStatus(ToDoStatus.TODO);
         toDoService.setToDoValue(toDoDTO,toDo);
+        toDoDTO.setId(1L);
+        toDo.setId(1L);
+        
+        Mockito.when(toDoRepository.findById(toDoDTO.getId())).thenReturn(java.util.Optional.of(toDo));
     
         Mockito.when(toDoRepository.save(toDo)).thenReturn(RECORD_1);
     
@@ -70,17 +74,35 @@ class ToDoServiceTest {
     
     @Test
     void getToDo() {
+        Mockito.when(toDoRepository.findById(1L)).thenReturn(java.util.Optional.of(RECORD_1));
+    
+        ToDo toDo = toDoService.getToDo(1L);
+        Assertions.assertThat(toDo.getPriority()).isEqualTo(ToDoPriority.HIGH);
     }
     
     @Test
     void getToDoList() {
+        List<ToDo> toDoList = new ArrayList<>(Arrays.asList(RECORD_1,RECORD_2,RECORD_3));
+        Mockito.when(toDoRepository.findAllByPriority()).thenReturn(toDoList);
+        
+        List<ToDoDTO>toDoList1= toDoService.getToDoList();
+        Assertions.assertThat(toDoList1.size()).isEqualTo(3);
     }
     
     @Test
     void getListByStatus() {
+        List<ToDo> toDoList = new ArrayList<>(Arrays.asList(RECORD_1,RECORD_2));
+        Mockito.when(toDoRepository.findAllByStatus(ToDoStatus.TODO)).thenReturn(toDoList);
+    
+        List<ToDoDTO>toDoList1= toDoService.getListByStatus(ToDoStatus.TODO);
+        Assertions.assertThat(toDoList1.size()).isEqualTo(2);
     }
     
     @Test
     void deleteToDo() {
+        Mockito.when(toDoRepository.findById(1L)).thenReturn(java.util.Optional.of(RECORD_1));
+        
+        toDoService.deleteToDo(1L);
+        
     }
 }

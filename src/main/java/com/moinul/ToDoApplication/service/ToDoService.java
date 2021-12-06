@@ -1,6 +1,7 @@
 package com.moinul.ToDoApplication.service;
 
 import com.moinul.ToDoApplication.common.Enum.ToDoStatus;
+import com.moinul.ToDoApplication.common.utils.Time;
 import com.moinul.ToDoApplication.dto.ToDoDTO;
 import com.moinul.ToDoApplication.model.ToDo;
 import com.moinul.ToDoApplication.repository.ToDoRepository;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,14 +26,10 @@ public class ToDoService {
         ToDo toDo =new ToDo();
         setToDoValue(toDoDTO,toDo);
         
-        toDo.setCreatedDate(getLocalTime());
+        toDo.setCreatedDate(Time.currentDateTime());
         return toDoRepository.save(toDo); //todo check validation before saving
     }
     
-    protected LocalDateTime getLocalTime() {
-        LocalDateTime createdDate = LocalDateTime.now();
-        return createdDate;
-    }
     
     public ToDoDTO updateToDo(ToDoDTO updtaedToDo) {
         ToDo toDo = toDoRepository.findById(updtaedToDo.getId()).orElseThrow(EntityNotFoundException::new);
