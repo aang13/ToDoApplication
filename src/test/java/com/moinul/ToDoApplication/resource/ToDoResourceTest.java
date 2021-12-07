@@ -110,6 +110,7 @@ class ToDoResourceTest {
     
     @Test
     void deleteToDo() throws Exception {
+        //dummy test for delete operation
         toDoService.deleteToDo(2L);
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/api/odo/delete/2"));

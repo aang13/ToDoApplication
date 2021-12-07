@@ -59,9 +59,7 @@ class ToDoRepositoryTest {
     public void updateToDoTest(){
     
         ToDo employee = toDoRepository.findById(1L).get();
-        
         employee.setPriority(ToDoPriority.HIGH);
-        
         ToDo toDoUpdated =  toDoRepository.save(employee);
         
        assertThat(toDoUpdated.getPriority()).isEqualTo(ToDoPriority.HIGH);
@@ -74,10 +72,7 @@ class ToDoRepositoryTest {
     public void deleteToDoTest(){
     
         ToDo toDo = toDoRepository.findById(1L).get();
-        
         toDoRepository.delete(toDo);
-    
-    
         ToDo toDo1 = null;
         
         Optional<ToDo> optionalToDo = toDoRepository.findById(1L);

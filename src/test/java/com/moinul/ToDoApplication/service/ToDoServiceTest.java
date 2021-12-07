@@ -101,7 +101,7 @@ class ToDoServiceTest {
     @Test
     void deleteToDo() {
         Mockito.when(toDoRepository.findById(1L)).thenReturn(java.util.Optional.of(RECORD_1));
-        
+        //dummy test for delete operation
         toDoService.deleteToDo(1L);
         
     }
