@@ -8,12 +8,12 @@ import javax.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name="todo")
+@Table(name = "todo")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ToDo {
-    //todo add validation of sizes for each attribute
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,7 +30,7 @@ public class ToDo {
     @Column(name = "priority")
     private ToDoPriority priority;
     
-    @Column(name ="created_date")
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
     
     

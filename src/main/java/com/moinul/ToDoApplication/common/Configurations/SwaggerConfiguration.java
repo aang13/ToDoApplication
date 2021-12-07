@@ -14,7 +14,7 @@ public class SwaggerConfiguration {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.moinul.TODO.resource"))
+                .apis(RequestHandlerSelectors.basePackage("com.moinul.ToDoApplication.resource"))
                 .build();
     }
 }

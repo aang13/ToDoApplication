@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moinul.ToDoApplication.common.Enum.*;
 import com.moinul.ToDoApplication.dto.ToDoDTO;
 import com.moinul.ToDoApplication.model.ToDo;
-import com.moinul.ToDoApplication.service.ToDoService;
+import com.moinul.ToDoApplication.service.ToDoServiceimpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ class ToDoResourceTest {
     ObjectMapper mapper;
     
     @MockBean
-    ToDoService toDoService;
+    ToDoServiceimpl toDoService;
     
     ToDo RECORD_1 = new ToDo(1l, "Description1", "Title1",ToDoStatus.TODO, ToDoPriority.HIGH , LocalDateTime.now());
     ToDo RECORD_2 = new ToDo(2l, "Description2", "Title2",ToDoStatus.TODO, ToDoPriority.LOW , LocalDateTime.now());

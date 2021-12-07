@@ -21,6 +21,6 @@ public class ToDoDTO {
     
     
     public ToDoDTO(ToDo toDo) {
-        this(toDo.getId(), toDo.getDescription(),toDo.getTitle(),toDo.getStatus(),toDo.getPriority());
+        this(toDo.getId(), toDo.getDescription(), toDo.getTitle(), toDo.getStatus(), toDo.getPriority());
     }
 }

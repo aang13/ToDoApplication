@@ -1,6 +1,5 @@
 package com.moinul.ToDoApplication.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moinul.ToDoApplication.common.Enum.*;
 import com.moinul.ToDoApplication.common.utils.Time;
 import com.moinul.ToDoApplication.dto.ToDoDTO;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
 
 
 import java.time.*;
@@ -26,7 +26,7 @@ class ToDoServiceTest {
     ToDoRepository toDoRepository;
     
     @InjectMocks
-    ToDoService toDoService;
+    ToDoServiceimpl toDoService;
     
     ToDo RECORD_1 = new ToDo(1l, "Description1", "Title1", ToDoStatus.TODO, ToDoPriority.HIGH , LocalDateTime.parse("2021-12-06T02:07:53.962303"));
     ToDo RECORD_2 = new ToDo(2l, "Description2", "Title2",ToDoStatus.TODO, ToDoPriority.LOW , LocalDateTime.now());
@@ -83,7 +83,7 @@ class ToDoServiceTest {
     @Test
     void getToDoList() {
         List<ToDo> toDoList = new ArrayList<>(Arrays.asList(RECORD_1,RECORD_2,RECORD_3));
-        Mockito.when(toDoRepository.findAllByPriority()).thenReturn(toDoList);
+        Mockito.when(toDoRepository.findAllByPriority(PageRequest.of(0, 2))).thenReturn(toDoList);
         
         List<ToDoDTO>toDoList1= toDoService.getToDoList();
         Assertions.assertThat(toDoList1.size()).isEqualTo(3);
@@ -92,7 +92,7 @@ class ToDoServiceTest {
     @Test
     void getListByStatus() {
         List<ToDo> toDoList = new ArrayList<>(Arrays.asList(RECORD_1,RECORD_2));
-        Mockito.when(toDoRepository.findAllByStatus(ToDoStatus.TODO)).thenReturn(toDoList);
+        Mockito.when(toDoRepository.findAllByStatus(ToDoStatus.TODO,PageRequest.of(0, 2))).thenReturn(toDoList);
     
         List<ToDoDTO>toDoList1= toDoService.getListByStatus(ToDoStatus.TODO);
         Assertions.assertThat(toDoList1.size()).isEqualTo(2);

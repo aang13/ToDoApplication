@@ -2,7 +2,7 @@ package com.moinul.ToDoApplication.resource;
 
 import com.moinul.ToDoApplication.common.Enum.ToDoStatus;
 import com.moinul.ToDoApplication.dto.ToDoDTO;
-import com.moinul.ToDoApplication.service.ToDoService;
+import com.moinul.ToDoApplication.service.ToDoServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -13,42 +13,41 @@ import java.util.*;
 @RestController
 @RequestMapping("/api")
 public class ToDoResource {
-    private ToDoService toDoService;
+    private ToDoServiceimpl toDoService;
     
     @Autowired
-    public ToDoResource(ToDoService toDoService){
+    public ToDoResource(ToDoServiceimpl toDoService) {
         this.toDoService = toDoService;
     }
     
     @PostMapping(value = "todo/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDoDTO createNewToDo(@Validated @RequestBody ToDoDTO toDo){
+    public ToDoDTO createNewToDo(@Validated @RequestBody ToDoDTO toDo) {
         return new ToDoDTO(toDoService.createToDo(toDo));
     }
     
     @PutMapping(value = "todo/update", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDoDTO updateToDo(@Validated @RequestBody ToDoDTO toDo){
+    public ToDoDTO updateToDo(@Validated @RequestBody ToDoDTO toDo) {
         return toDoService.updateToDo(toDo);
     }
     
     @GetMapping(value = "todo/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ToDoDTO getToDo(@PathVariable Long id){
+    public ToDoDTO getToDo(@PathVariable Long id) {
         return new ToDoDTO(toDoService.getToDo(id));
     }
     
     @GetMapping(value = "todo/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ToDoDTO> getToDoList(@RequestParam Optional<String>status){
+    public List<ToDoDTO> getToDoList(@RequestParam Optional<String> status) {
         
-        if(status.isPresent()) {
+        if (status.isPresent()) {
             ToDoStatus toDoStatus = ToDoStatus.valueOf(status.orElse(""));
             return toDoService.getListByStatus(toDoStatus);
-        }
-        else{
+        } else {
             return toDoService.getToDoList();
         }
     }
     
     @DeleteMapping(value = "todo/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void DeleteToDo(@RequestParam("id") Long id){
+    public void DeleteToDo(@RequestParam("id") Long id) {
         toDoService.deleteToDo(id);
     }
     
