@@ -53,13 +53,13 @@ public class ToDoServiceimpl implements ToDoService{
     }
     
     public List<ToDoDTO> getToDoList() {
-        List<ToDo> toDoList = toDoRepository.findAllByPriority( PageRequest.of(0, 2));
+        List<ToDo> toDoList = toDoRepository.findAllByPriority( PageRequest.of(0, 50));
         if (toDoList == null) return Collections.emptyList();
         return toDoList.stream().map(ToDoDTO::new).collect(Collectors.toList());
     }
     
     public List<ToDoDTO> getListByStatus(ToDoStatus status) {
-        List<ToDo> toDoList = toDoRepository.findAllByStatus(status,PageRequest.of(0, 2));
+        List<ToDo> toDoList = toDoRepository.findAllByStatus(status,PageRequest.of(0, 50));
         if (toDoList == null) return Collections.emptyList();
         return toDoList.stream().map(ToDoDTO::new).collect(Collectors.toList());
     }
